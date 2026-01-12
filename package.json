@@ -1,0 +1,32 @@
+{
+  "name": "cash-box-app-manager",
+  "version": "1.0.0",
+  "description": "Pi Appliance Host Application - App manager for Raspberry Pi touchscreen appliance",
+  "main": "bin/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node bin/server.js",
+    "dev": "node bin/server.js",
+    "test": "mocha test/unit/",
+    "test:integration": "mocha --timeout 25000 test/integration/",
+    "test:all": "mocha test/unit/ test/integration/",
+    "lint": "standard --env mocha --fix"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "npm-registry-fetch": "^16.0.0",
+    "winston": "^3.11.0",
+    "winston-daily-rotate-file": "^4.7.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0",
+    "sinon": "^17.0.1",
+    "standard": "^17.1.2"
+  }
+}
+
