@@ -7,26 +7,28 @@
   "scripts": {
     "start": "node bin/server.js",
     "dev": "node bin/server.js",
-    "test": "mocha test/unit/",
+    "test": "c8 mocha test/unit/",
     "test:integration": "mocha --timeout 25000 test/integration/",
     "test:all": "mocha test/unit/ test/integration/",
-    "lint": "standard --env mocha --fix"
+    "lint": "standard --env mocha --fix",
+    "coverage": "c8 --reporter=html mocha test/unit/ --exit"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@chris.troutner/remote-admin-cashbox-ui": "^1.0.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "npm-registry-fetch": "^16.0.0",
-    "winston": "^3.11.0",
-    "winston-daily-rotate-file": "^4.7.1"
+    "@chris.troutner/remote-admin-cashbox-ui": "1.0.2",
+    "cors": "2.8.5",
+    "dotenv": "16.3.1",
+    "express": "4.18.2",
+    "npm-registry-fetch": "16.0.0",
+    "winston": "3.11.0",
+    "winston-daily-rotate-file": "4.7.1"
   },
   "devDependencies": {
-    "chai": "^4.3.10",
-    "mocha": "^10.2.0",
-    "sinon": "^17.0.1",
-    "standard": "^17.1.2"
+    "c8": "^10.1.3",
+    "chai": "4.3.10",
+    "mocha": "10.2.0",
+    "sinon": "17.0.1",
+    "standard": "17.1.2"
   }
 }
