@@ -1,0 +1,9 @@
+{
+  "name": "Cash Box App Manager REST API",
+  "version": "1.0.0",
+  "description": "REST API for managing cash box applications",
+  "title": "Cash Box App Manager API",
+  "url": "http://localhost:3000",
+  "sampleUrl": "http://localhost:3000"
+}
+

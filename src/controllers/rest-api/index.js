@@ -5,6 +5,7 @@
 */
 
 import AppsRouter from './apps/index.js'
+import ConfigRouter from './config/index.js'
 import config from '../../config/index.js'
 
 class RESTControllers {
@@ -39,6 +40,10 @@ class RESTControllers {
     // Attach the REST API Controllers associated with the /apps route
     const appsRouter = new AppsRouter(dependencies)
     appsRouter.attach(app)
+
+    // Attach the REST API Controllers associated with the /config route
+    const configRouter = new ConfigRouter(dependencies)
+    configRouter.attach(app)
   }
 }
 

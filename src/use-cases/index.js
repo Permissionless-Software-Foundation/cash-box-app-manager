@@ -7,6 +7,8 @@ import GetInstalledAppsUseCase from './get-installed-apps.js'
 import DiscoverAppsUseCase from './discover-apps.js'
 import InstallAppUseCase from './install-app.js'
 import UninstallAppUseCase from './uninstall-app.js'
+import GetConfigUseCase from './get-config.js'
+import SaveConfigUseCase from './save-config.js'
 
 class UseCases {
   constructor (localConfig = {}) {
@@ -29,6 +31,12 @@ class UseCases {
       adapters: this.adapters
     })
     this.uninstallApp = new UninstallAppUseCase({
+      adapters: this.adapters
+    })
+    this.getConfig = new GetConfigUseCase({
+      adapters: this.adapters
+    })
+    this.saveConfig = new SaveConfigUseCase({
       adapters: this.adapters
     })
   }

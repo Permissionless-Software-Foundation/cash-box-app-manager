@@ -63,6 +63,10 @@ class Server {
       // Attach REST API controllers to the app.
       this.controllers.attachRESTControllers(app)
 
+      // Serve API documentation
+      this.serveApiDocs(app)
+      wlogger.info('[Server] API docs middleware registered')
+
       // Dynamic app routing - serve static files from installed apps
       // IMPORTANT: Must be before serveFrontend to intercept /apps/ routes
       this.setupAppRouting(app)
@@ -107,6 +111,18 @@ class Server {
       await this.sleep(5000)
       this.process.exit(1)
     }
+  }
+
+  /**
+   * Serve API documentation
+   */
+  serveApiDocs (app) {
+    const docsPath = join(__dirname, '../docs/api')
+    app.use('/api-docs', express.static(docsPath))
+    // Serve index.html for /api-docs root path
+    app.get('/api-docs', (req, res) => {
+      res.sendFile(join(docsPath, 'index.html'))
+    })
   }
 
   /**

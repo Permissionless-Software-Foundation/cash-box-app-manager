@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
 client/node_modules/
+data/
+docs/
 
 # Build outputs
 client/build/

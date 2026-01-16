@@ -4,6 +4,7 @@
 */
 
 import NpmService from './npm-service.js'
+import LevelDbAdapter from './level-db.js'
 import config from '../config/index.js'
 
 class Adapters {
@@ -13,10 +14,15 @@ class Adapters {
     this.npmService = new NpmService({
       config: this.config
     })
+    this.levelDb = new LevelDbAdapter({
+      config: this.config
+    })
   }
 
   async start () {
     try {
+      // Initialize Level DB
+      await this.levelDb.start()
       console.log('Adapters started.')
       return true
     } catch (err) {

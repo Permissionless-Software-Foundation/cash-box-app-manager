@@ -29,8 +29,26 @@ class AppsRESTControllerLib {
   }
 
   /**
-   * GET /api/apps/installed
-   * Get all installed apps
+   * @api {get} /api/apps/installed Get installed apps
+   * @apiPermission public
+   * @apiName GetInstalledApps
+   * @apiGroup Apps
+   *
+   * @apiDescription Get all currently installed applications
+   *
+   * @apiExample {curl} Example usage:
+   *     curl -X GET http://localhost:3000/api/apps/installed
+   *
+   * @apiSuccess {Array} apps Array of installed app objects
+   * @apiSuccess {String} apps.name Package name (e.g., "@scope/app-name")
+   * @apiSuccess {String} apps.displayName App display name
+   * @apiSuccess {String} apps.description App description
+   * @apiSuccess {String} apps.version App version
+   * @apiSuccess {String} apps.icon App icon path
+   * @apiSuccess {String} apps.main App entry point
+   *
+   * @apiError (500) {String} status Error status
+   * @apiError (500) {String} message Error message
    */
   async getInstalledApps (req, res) {
     try {
@@ -42,8 +60,24 @@ class AppsRESTControllerLib {
   }
 
   /**
-   * GET /api/apps/discover
-   * Discover available apps from npm registry
+   * @api {get} /api/apps/discover Discover available apps
+   * @apiPermission public
+   * @apiName DiscoverApps
+   * @apiGroup Apps
+   *
+   * @apiDescription Discover available apps from npm registry that match the app keyword
+   *
+   * @apiExample {curl} Example usage:
+   *     curl -X GET http://localhost:3000/api/apps/discover
+   *
+   * @apiSuccess {Array} apps Array of available app objects
+   * @apiSuccess {String} apps.name Package name
+   * @apiSuccess {String} apps.description App description
+   * @apiSuccess {String} apps.version App version
+   * @apiSuccess {Object} apps.versions Available versions
+   *
+   * @apiError (500) {String} status Error status
+   * @apiError (500) {String} message Error message
    */
   async discoverApps (req, res) {
     try {
@@ -55,8 +89,27 @@ class AppsRESTControllerLib {
   }
 
   /**
-   * POST /api/apps/install/:scope/:appName
-   * Install an app
+   * @api {post} /api/apps/install/:scope/:appName Install app
+   * @apiPermission public
+   * @apiName InstallApp
+   * @apiGroup Apps
+   *
+   * @apiDescription Install an application from npm registry
+   *
+   * @apiParam {String} scope App scope (without @ prefix)
+   * @apiParam {String} appName App name
+   *
+   * @apiExample {curl} Example usage:
+   *     curl -X POST http://localhost:3000/api/apps/install/my-scope/my-app
+   *
+   * @apiSuccess {String} status Success status
+   * @apiSuccess {String} message Success message
+   *
+   * @apiError (400) {String} status Error status
+   * @apiError (400) {String} message Error message
+   *
+   * @apiError (500) {String} status Error status
+   * @apiError (500) {String} message Error message
    */
   async installApp (req, res) {
     try {
@@ -77,8 +130,27 @@ class AppsRESTControllerLib {
   }
 
   /**
-   * POST /api/apps/uninstall/:scope/:appName
-   * Uninstall an app
+   * @api {post} /api/apps/uninstall/:scope/:appName Uninstall app
+   * @apiPermission public
+   * @apiName UninstallApp
+   * @apiGroup Apps
+   *
+   * @apiDescription Uninstall an application
+   *
+   * @apiParam {String} scope App scope (without @ prefix)
+   * @apiParam {String} appName App name
+   *
+   * @apiExample {curl} Example usage:
+   *     curl -X POST http://localhost:3000/api/apps/uninstall/my-scope/my-app
+   *
+   * @apiSuccess {String} status Success status
+   * @apiSuccess {String} message Success message
+   *
+   * @apiError (400) {String} status Error status
+   * @apiError (400) {String} message Error message
+   *
+   * @apiError (500) {String} status Error status
+   * @apiError (500) {String} message Error message
    */
   async uninstallApp (req, res) {
     try {
