@@ -81,3 +81,4 @@ describe('#get-installed-apps.js', () => {
   })
 })
 
+

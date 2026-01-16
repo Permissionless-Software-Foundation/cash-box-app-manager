@@ -47,3 +47,4 @@ class GetInstalledAppsUseCase {
 
 export default GetInstalledAppsUseCase
 
+

@@ -28,3 +28,4 @@ class Adapters {
 
 export default Adapters
 
+

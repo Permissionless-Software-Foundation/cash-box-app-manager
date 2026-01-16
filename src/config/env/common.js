@@ -5,3 +5,4 @@ export default {
   discoverCacheTTL: 3600000 // 1 hour in milliseconds
 }
 
+

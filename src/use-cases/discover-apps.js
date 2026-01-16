@@ -36,3 +36,4 @@ class DiscoverAppsUseCase {
 
 export default DiscoverAppsUseCase
 
+

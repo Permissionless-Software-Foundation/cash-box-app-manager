@@ -52,3 +52,4 @@ export const mockAppConfig = {
   icon: 'assets/icon.png'
 }
 
+

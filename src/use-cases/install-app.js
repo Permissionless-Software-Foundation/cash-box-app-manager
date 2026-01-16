@@ -80,3 +80,4 @@ class InstallAppUseCase {
 
 export default InstallAppUseCase
 
+
