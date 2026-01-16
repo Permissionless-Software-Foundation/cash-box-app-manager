@@ -46,13 +46,8 @@ class Controllers {
   }
 
   async initUseCases () {
-    try {
-      // Use cases are already initialized in constructor
-      return true
-    } catch (err) {
-      console.error('Error initializing use cases:', err)
-      throw err
-    }
+    // Use cases are already initialized in constructor
+    return true
   }
 
   attachRESTControllers (app) {

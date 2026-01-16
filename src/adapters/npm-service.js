@@ -186,8 +186,6 @@ class NpmService {
    */
   async getAppBuildPath (packageName) {
     try {
-      const packageJson = await this.readPackageJson(packageName)
-
       // Check for common build directories
       const possibleDirs = ['dist', 'build', 'public']
       const basePath = join(process.cwd(), 'node_modules', packageName)

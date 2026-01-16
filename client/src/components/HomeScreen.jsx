@@ -65,8 +65,6 @@ function HomeScreen () {
         : (
           <Row>
             {apps.map((app) => {
-              const scope = app.name.split('/')[0].replace('@', '')
-              const appName = app.name.split('/')[1]
               const appUrl = getAppUrl(app)
               const iconUrl = app.config?.icon
                 ? `${appUrl}${app.config.icon}`
@@ -83,32 +81,32 @@ function HomeScreen () {
                     <Card.Body className='text-center'>
                       {iconUrl
                         ? (
-                  <img
-                          src={iconUrl}
-                          alt={app.config.displayName || app.name}
-                          style={{ width: '64px', height: '64px', marginBottom: '10px' }}
-                          onError={(e) => {
-                            e.target.style.display = 'none'
-                          }}
-                        />
+                          <img
+                            src={iconUrl}
+                            alt={app.config.displayName || app.name}
+                            style={{ width: '64px', height: '64px', marginBottom: '10px' }}
+                            onError={(e) => {
+                              e.target.style.display = 'none'
+                            }}
+                          />
                           )
                         : (
-                  <div
-                          style={{
-                            width: '64px',
-                            height: '64px',
-                            margin: '0 auto 10px',
-                            backgroundColor: '#6c757d',
-                            borderRadius: '8px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: 'white',
-                            fontSize: '24px'
-                          }}
-                        >
-                          {app.config.displayName?.[0] || app.name[1]?.toUpperCase() || '?'}
-                        </div>
+                          <div
+                            style={{
+                              width: '64px',
+                              height: '64px',
+                              margin: '0 auto 10px',
+                              backgroundColor: '#6c757d',
+                              borderRadius: '8px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              color: 'white',
+                              fontSize: '24px'
+                            }}
+                          >
+                            {app.config.displayName?.[0] || app.name[1]?.toUpperCase() || '?'}
+                          </div>
                           )}
                       <Card.Title style={{ fontSize: '0.9rem', color: '#000' }}>
                         {app.config.displayName || app.name}

@@ -59,10 +59,10 @@ function AppStore () {
       }
 
       const result = await response.json()
-      alert(result.message || 'App installed successfully!')
+      window.alert(result.message || 'App installed successfully!')
       await fetchInstalledApps()
     } catch (err) {
-      alert(`Installation failed: ${err.message}`)
+      window.alert(`Installation failed: ${err.message}`)
     } finally {
       setInstalling({ ...installing, [app.name]: false })
     }
@@ -84,10 +84,10 @@ function AppStore () {
       }
 
       const result = await response.json()
-      alert(result.message || 'App uninstalled successfully!')
+      window.alert(result.message || 'App uninstalled successfully!')
       await fetchInstalledApps()
     } catch (err) {
-      alert(`Uninstallation failed: ${err.message}`)
+      window.alert(`Uninstallation failed: ${err.message}`)
     } finally {
       setInstalling({ ...installing, [app.name]: false })
     }
@@ -141,65 +141,65 @@ function AppStore () {
                       </Badge>
                       {installed && (
                         <Badge bg='success' className='ms-2 mb-2'>
-                  Installed
-                      </Badge>
+                          Installed
+                        </Badge>
                       )}
                     </Card.Body>
                     <Card.Footer>
                       {installed
                         ? (
-                  <Button
-                          variant='danger'
-                          size='sm'
-                          onClick={() => uninstallApp(app)}
-                          disabled={isInstalling}
-                          className='w-100'
-                        >
-                          {isInstalling
-                            ? (
-                              <>
-                                <Spinner
-                                  as='span'
-                                  animation='border'
-                                  size='sm'
-                                  role='status'
-                                  aria-hidden='true'
-                                  className='me-2'
-                                />
-                                Uninstalling...
-                              </>
-                              )
-                            : (
-                                'Uninstall'
-                              )}
-                        </Button>
+                          <Button
+                            variant='danger'
+                            size='sm'
+                            onClick={() => uninstallApp(app)}
+                            disabled={isInstalling}
+                            className='w-100'
+                          >
+                            {isInstalling
+                              ? (
+                                <>
+                                  <Spinner
+                                    as='span'
+                                    animation='border'
+                                    size='sm'
+                                    role='status'
+                                    aria-hidden='true'
+                                    className='me-2'
+                                  />
+                                  Uninstalling...
+                                </>
+                                )
+                              : (
+                                  'Uninstall'
+                                )}
+                          </Button>
                           )
                         : (
-                  <Button
-                          variant='primary'
-                          size='sm'
-                          onClick={() => installApp(app)}
-                          disabled={isInstalling}
-                          className='w-100'
-                        >
-                          {isInstalling
-                            ? (
-                              <>
-                                <Spinner
-                                  as='span'
-                                  animation='border'
-                                  size='sm'
-                                  role='status'
-                                  aria-hidden='true'
-                                  className='me-2'
-                                />
-                                Installing...
-                              </>
-                              )
-                            : (
-                                'Install'
-                              )}
-                        </Button>
+                          <Button
+                            variant='primary'
+                            size='sm'
+                            onClick={() => installApp(app)}
+                            disabled={isInstalling}
+                            className='w-100'
+                          >
+                            {isInstalling
+                              ? (
+                                <>
+                                  <Spinner
+                                    as='span'
+                                    animation='border'
+                                    size='sm'
+                                    role='status'
+                                    aria-hidden='true'
+                                    className='me-2'
+                                  />
+                                  Installing...
+                                </>
+                                )
+                              : (
+                                  'Install'
+                                )}
+                          </Button>
                           )}
                     </Card.Footer>
                   </Card>
