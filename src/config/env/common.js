@@ -4,5 +4,3 @@ export default {
   installedAppsFile: 'installed-apps.json',
   discoverCacheTTL: 3600000 // 1 hour in milliseconds
 }
-
-

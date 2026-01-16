@@ -62,7 +62,7 @@ class NpmService {
     try {
       // Check cache
       const now = Date.now()
-      if (this.discoverCache && this.discoverCacheTime && 
+      if (this.discoverCache && this.discoverCacheTime &&
           (now - this.discoverCacheTime) < this.config.discoverCacheTTL) {
         wlogger.debug('Returning cached discover results')
         return this.discoverCache
@@ -187,11 +187,11 @@ class NpmService {
   async getAppBuildPath (packageName) {
     try {
       const packageJson = await this.readPackageJson(packageName)
-      
+
       // Check for common build directories
       const possibleDirs = ['dist', 'build', 'public']
       const basePath = join(process.cwd(), 'node_modules', packageName)
-      
+
       for (const dir of possibleDirs) {
         const dirPath = join(basePath, dir)
         try {
@@ -201,7 +201,7 @@ class NpmService {
           // Directory doesn't exist, try next
         }
       }
-      
+
       // If no build directory found, return base path
       return basePath
     } catch (err) {
@@ -212,4 +212,3 @@ class NpmService {
 }
 
 export default NpmService
-

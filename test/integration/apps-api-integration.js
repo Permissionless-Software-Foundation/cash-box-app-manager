@@ -131,4 +131,3 @@ describe('#apps-api-integration.js', () => {
     })
   })
 })
-

@@ -42,7 +42,7 @@ class Server {
 
       // Request logging middleware
       app.use((req, res, next) => {
-        wlogger.info(`${req.method} ${req.path}`)
+        wlogger.info(`[Request] ${req.method} ${req.path} (originalUrl: ${req.originalUrl})`)
         next()
       })
 
@@ -64,10 +64,13 @@ class Server {
       this.controllers.attachRESTControllers(app)
 
       // Dynamic app routing - serve static files from installed apps
+      // IMPORTANT: Must be before serveFrontend to intercept /apps/ routes
       this.setupAppRouting(app)
+      wlogger.info('[Server] App routing middleware registered')
 
       // Serve React frontend
       this.serveFrontend(app)
+      wlogger.info('[Server] Static frontend middleware registered')
 
       // Health check endpoint
       app.get('/health', (req, res) => {
@@ -110,10 +113,14 @@ class Server {
    * Setup dynamic routing for installed apps
    */
   setupAppRouting (app) {
+    // Use app.use with wildcard pattern to match all /apps/:scope/:appName paths
     app.use('/apps/:scope/:appName', async (req, res, next) => {
+      wlogger.info(`[App Routing] Route handler called for ${req.method} ${req.path}, params:`, req.params)
       try {
         const { scope, appName } = req.params
         const packageName = `@${scope}/${appName}`
+
+        wlogger.info(`[App Routing] Request to /apps/${scope}/${appName} - path: ${req.path}, originalUrl: ${req.originalUrl}, baseUrl: ${req.baseUrl}`)
 
         // Get adapters instance
         const adapters = new Adapters({ config: this.config })
@@ -121,32 +128,53 @@ class Server {
 
         // Get build path for the app
         const buildPath = await adapters.npmService.getAppBuildPath(packageName)
+        wlogger.info(`[App Routing] Build path for ${packageName}: ${buildPath}`)
 
         // Serve static files from the build directory
         const { access, stat } = await import('fs/promises')
         const { join } = await import('path')
-        
+
         // Check if build directory exists
         await access(buildPath)
 
         // Remove the /apps/:scope/:appName prefix from the path
-        const relativePath = req.path.replace(`/apps/${scope}/${appName}`, '') || '/'
-        const filePath = join(buildPath, relativePath)
+        // Use originalUrl if path doesn't match (Express may strip prefix in some cases)
+        const fullPath = req.path.includes(`/apps/${scope}/${appName}`)
+          ? req.path
+          : req.originalUrl.split('?')[0] // Remove query string if present
+        const relativePath = fullPath.replace(`/apps/${scope}/${appName}`, '') || '/'
+        // Normalize trailing slashes - remove trailing slash for path resolution
+        const normalizedRelativePath = relativePath === '/' ? '/' : relativePath.replace(/\/$/, '') || '/'
+        const filePath = join(buildPath, normalizedRelativePath)
+        wlogger.info(`[App Routing] fullPath: ${fullPath}, relativePath: ${relativePath}, normalizedRelativePath: ${normalizedRelativePath}, filePath: ${filePath}`)
 
         // Try to serve the requested file
         try {
           const stats = await stat(filePath)
           if (stats.isFile()) {
             // File exists, serve it
+            wlogger.info(`[App Routing] Serving file: ${filePath}`)
             return res.sendFile(filePath)
           } else if (stats.isDirectory()) {
             // It's a directory, try index.html
             const indexPath = join(filePath, 'index.html')
             try {
               await access(indexPath)
+              wlogger.info(`[App Routing] Serving index.html from directory: ${indexPath}`)
               return res.sendFile(indexPath)
             } catch {
-              // No index.html in directory
+              // No index.html in directory, try root index.html as fallback
+              const rootIndexPath = join(buildPath, 'index.html')
+              try {
+                await access(rootIndexPath)
+                wlogger.info(`[App Routing] Serving root index.html: ${rootIndexPath}`)
+                return res.sendFile(rootIndexPath)
+              } catch {
+                wlogger.error(`[App Routing] index.html not found in ${indexPath} or ${rootIndexPath}`)
+                return res.status(404).json({
+                  error: 'index.html not found'
+                })
+              }
             }
           }
         } catch (fileErr) {
@@ -154,16 +182,18 @@ class Server {
           const indexPath = join(buildPath, 'index.html')
           try {
             await access(indexPath)
+            wlogger.info(`[App Routing] File not found, serving root index.html: ${indexPath}`)
             return res.sendFile(indexPath)
           } catch {
             // index.html doesn't exist either
+            wlogger.error(`[App Routing] index.html not found at: ${indexPath}`)
             return res.status(404).json({
               error: 'App not found'
             })
           }
         }
       } catch (err) {
-        wlogger.error(`Error serving app ${req.params.scope}/${req.params.appName}:`, err)
+        wlogger.error(`[App Routing] Error serving app ${req.params.scope}/${req.params.appName}:`, err)
         if (err.code === 'ENOENT') {
           return res.status(404).json({
             error: 'App not found'
@@ -179,7 +209,16 @@ class Server {
    */
   serveFrontend (app) {
     const frontendPath = join(__dirname, '../client/build')
-    app.use(express.static(frontendPath))
+    // Only serve static files for paths that don't start with /apps/
+    app.use((req, res, next) => {
+      wlogger.info(`[Static Middleware] Request: ${req.method} ${req.path}`)
+      if (req.path.startsWith('/apps/')) {
+        wlogger.info(`[Static] Skipping static file serving for /apps/ route: ${req.path}`)
+        return next()
+      }
+      wlogger.debug(`[Static] Serving static file for path: ${req.path}`)
+      express.static(frontendPath)(req, res, next)
+    })
   }
 
   sleep (ms) {
@@ -197,4 +236,3 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
 }
 
 export default Server
-

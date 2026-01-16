@@ -52,5 +52,3 @@ class UninstallAppUseCase {
 }
 
 export default UninstallAppUseCase
-
-

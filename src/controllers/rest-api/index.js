@@ -43,5 +43,3 @@ class RESTControllers {
 }
 
 export default RESTControllers
-
-

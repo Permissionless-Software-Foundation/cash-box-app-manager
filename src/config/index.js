@@ -11,5 +11,3 @@ if (env === 'production') {
 }
 
 export default Object.assign({}, common, config)
-
-

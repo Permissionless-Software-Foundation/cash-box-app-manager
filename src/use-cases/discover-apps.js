@@ -24,7 +24,7 @@ class DiscoverAppsUseCase {
     try {
       wlogger.debug('Discovering apps from npm registry')
       const apps = await this.adapters.npmService.discoverApps()
-      
+
       wlogger.info(`Discovered ${apps.length} apps from npm registry`)
       return apps
     } catch (err) {
@@ -35,5 +35,3 @@ class DiscoverAppsUseCase {
 }
 
 export default DiscoverAppsUseCase
-
-

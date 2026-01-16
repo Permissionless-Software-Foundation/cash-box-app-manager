@@ -9,6 +9,10 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:3000',
         changeOrigin: true
+      },
+      '/apps': {
+        target: 'http://localhost:3000',
+        changeOrigin: true
       }
     }
   },
@@ -16,5 +20,3 @@ export default defineConfig({
     outDir: 'build'
   }
 })
-
-

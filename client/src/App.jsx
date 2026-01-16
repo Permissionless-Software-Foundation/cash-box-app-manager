@@ -7,16 +7,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App () {
   return (
-    <div className="App">
+    <div className='App'>
       <NavigationBar />
       <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/store" element={<AppStore />} />
+        <Route path='/' element={<HomeScreen />} />
+        <Route path='/store' element={<AppStore />} />
       </Routes>
     </div>
   )
 }
 
 export default App
-
-

@@ -91,5 +91,3 @@ describe('#uninstall-app.js', () => {
     })
   })
 })
-
-

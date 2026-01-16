@@ -63,5 +63,3 @@ describe('#discover-apps.js', () => {
     })
   })
 })
-
-

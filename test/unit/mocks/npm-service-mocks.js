@@ -51,5 +51,3 @@ export const mockAppConfig = {
   displayName: 'Calculator',
   icon: 'assets/icon.png'
 }
-
-

@@ -61,5 +61,3 @@ class Controllers {
 }
 
 export default Controllers
-
-

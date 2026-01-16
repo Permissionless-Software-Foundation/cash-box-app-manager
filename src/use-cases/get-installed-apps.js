@@ -25,7 +25,7 @@ class GetInstalledAppsUseCase {
     try {
       wlogger.debug('Getting installed apps')
       const appsData = await this.adapters.npmService.getInstalledApps()
-      
+
       // Convert to App entities and validate
       const apps = appsData.map(data => {
         const app = new App(data)
@@ -46,5 +46,3 @@ class GetInstalledAppsUseCase {
 }
 
 export default GetInstalledAppsUseCase
-
-

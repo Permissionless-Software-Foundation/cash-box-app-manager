@@ -99,10 +99,10 @@ function AppStore () {
 
   if (loading) {
     return (
-      <Container className="mt-4">
-        <div className="text-center">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
+      <Container className='mt-4'>
+        <div className='text-center'>
+          <Spinner animation='border' role='status'>
+            <span className='visually-hidden'>Loading...</span>
           </Spinner>
         </div>
       </Container>
@@ -111,98 +111,105 @@ function AppStore () {
 
   if (error) {
     return (
-      <Container className="mt-4">
-        <Alert variant="danger">{error}</Alert>
+      <Container className='mt-4'>
+        <Alert variant='danger'>{error}</Alert>
       </Container>
     )
   }
 
   return (
-    <Container className="mt-4">
-      <h1 className="mb-4">App Store</h1>
-      {apps.length === 0 ? (
-        <Alert variant="info">No apps found in the registry.</Alert>
-      ) : (
-        <Row>
-          {apps.map((app) => {
-            const installed = isInstalled(app.name)
-            const isInstalling = installing[app.name]
+    <Container className='mt-4'>
+      <h1 className='mb-4'>App Store</h1>
+      {apps.length === 0
+        ? (
+          <Alert variant='info'>No apps found in the registry.</Alert>
+          )
+        : (
+          <Row>
+            {apps.map((app) => {
+              const installed = isInstalled(app.name)
+              const isInstalling = installing[app.name]
 
-            return (
-              <Col key={app.name} xs={12} sm={6} md={4} lg={3} className="mb-4">
-                <Card className="h-100">
-                  <Card.Body>
-                    <Card.Title>{app.name}</Card.Title>
-                    <Card.Text>{app.description || 'No description available'}</Card.Text>
-                    <Badge bg="secondary" className="mb-2">
-                      v{app.version}
-                    </Badge>
-                    {installed && (
-                      <Badge bg="success" className="ms-2 mb-2">
-                        Installed
+              return (
+                <Col key={app.name} xs={12} sm={6} md={4} lg={3} className='mb-4'>
+                  <Card className='h-100'>
+                    <Card.Body>
+                      <Card.Title>{app.name}</Card.Title>
+                      <Card.Text>{app.description || 'No description available'}</Card.Text>
+                      <Badge bg='secondary' className='mb-2'>
+                        v{app.version}
                       </Badge>
-                    )}
-                  </Card.Body>
-                  <Card.Footer>
-                    {installed ? (
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        onClick={() => uninstallApp(app)}
-                        disabled={isInstalling}
-                        className="w-100"
-                      >
-                        {isInstalling ? (
-                          <>
-                            <Spinner
-                              as="span"
-                              animation="border"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                              className="me-2"
-                            />
-                            Uninstalling...
-                          </>
-                        ) : (
-                          'Uninstall'
-                        )}
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        onClick={() => installApp(app)}
-                        disabled={isInstalling}
-                        className="w-100"
-                      >
-                        {isInstalling ? (
-                          <>
-                            <Spinner
-                              as="span"
-                              animation="border"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                              className="me-2"
-                            />
-                            Installing...
-                          </>
-                        ) : (
-                          'Install'
-                        )}
-                      </Button>
-                    )}
-                  </Card.Footer>
-                </Card>
-              </Col>
-            )
-          })}
-        </Row>
-      )}
+                      {installed && (
+                        <Badge bg='success' className='ms-2 mb-2'>
+                  Installed
+                      </Badge>
+                      )}
+                    </Card.Body>
+                    <Card.Footer>
+                      {installed
+                        ? (
+                  <Button
+                          variant='danger'
+                          size='sm'
+                          onClick={() => uninstallApp(app)}
+                          disabled={isInstalling}
+                          className='w-100'
+                        >
+                          {isInstalling
+                            ? (
+                              <>
+                                <Spinner
+                                  as='span'
+                                  animation='border'
+                                  size='sm'
+                                  role='status'
+                                  aria-hidden='true'
+                                  className='me-2'
+                                />
+                                Uninstalling...
+                              </>
+                              )
+                            : (
+                                'Uninstall'
+                              )}
+                        </Button>
+                          )
+                        : (
+                  <Button
+                          variant='primary'
+                          size='sm'
+                          onClick={() => installApp(app)}
+                          disabled={isInstalling}
+                          className='w-100'
+                        >
+                          {isInstalling
+                            ? (
+                              <>
+                                <Spinner
+                                  as='span'
+                                  animation='border'
+                                  size='sm'
+                                  role='status'
+                                  aria-hidden='true'
+                                  className='me-2'
+                                />
+                                Installing...
+                              </>
+                              )
+                            : (
+                                'Install'
+                              )}
+                        </Button>
+                          )}
+                    </Card.Footer>
+                  </Card>
+                </Col>
+              )
+            })}
+          </Row>
+          )}
     </Container>
   )
 }
 
 export default AppStore
-

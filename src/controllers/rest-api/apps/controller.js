@@ -108,5 +108,3 @@ class AppsRESTControllerLib {
 }
 
 export default AppsRESTControllerLib
-
-
