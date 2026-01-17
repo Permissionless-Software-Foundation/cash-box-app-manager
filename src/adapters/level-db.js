@@ -140,4 +140,3 @@ class LevelDbAdapter {
 }
 
 export default LevelDbAdapter
-

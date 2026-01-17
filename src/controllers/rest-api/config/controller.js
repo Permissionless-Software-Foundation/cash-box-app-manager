@@ -139,4 +139,3 @@ class ConfigRESTControllerLib {
 }
 
 export default ConfigRESTControllerLib
-

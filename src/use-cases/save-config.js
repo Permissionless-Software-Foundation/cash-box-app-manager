@@ -52,4 +52,3 @@ class SaveConfigUseCase {
 }
 
 export default SaveConfigUseCase
-

@@ -1,5 +1,5 @@
 export default {
   env: 'development',
-  port: 3000,
+  port: 3633,
   logLevel: 'debug'
 }

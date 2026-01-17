@@ -158,4 +158,3 @@ describe('#save-config.js', () => {
     })
   })
 })
-

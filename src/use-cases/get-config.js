@@ -53,4 +53,3 @@ class GetConfigUseCase {
 }
 
 export default GetConfigUseCase
-

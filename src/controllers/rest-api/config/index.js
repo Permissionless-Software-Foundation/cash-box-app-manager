@@ -31,4 +31,3 @@ class ConfigRouter {
 }
 
 export default ConfigRouter
-

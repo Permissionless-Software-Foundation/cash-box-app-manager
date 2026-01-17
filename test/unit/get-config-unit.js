@@ -113,4 +113,3 @@ describe('#get-config.js', () => {
     })
   })
 })
-
