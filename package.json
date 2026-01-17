@@ -17,7 +17,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@chris.troutner/remote-admin-cashbox-ui": "1.0.3",
+    "@chris.troutner/remote-admin-cashbox-ui": "1.0.4",
     "apidoc": "1.2.0",
     "cors": "2.8.5",
     "dotenv": "16.3.1",
