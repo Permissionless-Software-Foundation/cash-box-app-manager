@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap'
+import { getApiUrl } from '../config/api.js'
 
 function HomeScreen () {
   const [apps, setApps] = useState([])
@@ -13,7 +14,7 @@ function HomeScreen () {
   const fetchInstalledApps = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/apps/installed')
+      const response = await fetch(getApiUrl('/api/apps/installed'))
       if (!response.ok) {
         throw new Error('Failed to fetch installed apps')
       }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Card, Button, Spinner, Alert, Badge } from 'react-bootstrap'
+import { getApiUrl } from '../config/api.js'
 
 function AppStore () {
   const [apps, setApps] = useState([])
@@ -16,7 +17,7 @@ function AppStore () {
   const fetchApps = async () => {
     try {
       setLoading(true)
-      const response = await fetch('/api/apps/discover')
+      const response = await fetch(getApiUrl('/api/apps/discover'))
       if (!response.ok) {
         throw new Error('Failed to fetch apps')
       }
@@ -32,7 +33,7 @@ function AppStore () {
 
   const fetchInstalledApps = async () => {
     try {
-      const response = await fetch('/api/apps/installed')
+      const response = await fetch(getApiUrl('/api/apps/installed'))
       if (!response.ok) {
         throw new Error('Failed to fetch installed apps')
       }
@@ -49,7 +50,7 @@ function AppStore () {
 
     try {
       setInstalling({ ...installing, [app.name]: true })
-      const response = await fetch(`/api/apps/install/${scope}/${appName}`, {
+      const response = await fetch(getApiUrl(`/api/apps/install/${scope}/${appName}`), {
         method: 'POST'
       })
 
@@ -74,7 +75,7 @@ function AppStore () {
 
     try {
       setInstalling({ ...installing, [app.name]: true })
-      const response = await fetch(`/api/apps/uninstall/${scope}/${appName}`, {
+      const response = await fetch(getApiUrl(`/api/apps/uninstall/${scope}/${appName}`), {
         method: 'POST'
       })
 
