@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Card, Spinner, Alert } from 'react-bootstrap'
-import { getApiUrl } from '../config/api.js'
+import { getApiUrl, getAppUrl as getAppUrlHelper } from '../config/api.js'
 
 function HomeScreen () {
   const [apps, setApps] = useState([])
@@ -31,7 +31,8 @@ function HomeScreen () {
   const getAppUrl = (app) => {
     const scope = app.name.split('/')[0].replace('@', '')
     const appName = app.name.split('/')[1]
-    return `/apps/${scope}/${appName}/`
+    // Use full URL to backend instead of relative path
+    return getAppUrlHelper(scope, appName)
   }
 
   if (loading) {

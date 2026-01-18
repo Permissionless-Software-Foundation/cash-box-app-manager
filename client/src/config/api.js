@@ -14,3 +14,13 @@ export const getApiUrl = (endpoint) => {
   const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`
   return `${API_BASE_URL}${cleanEndpoint}`
 }
+
+/**
+ * Helper function to build app URLs
+ * @param {string} scope - App scope (e.g., 'chris.troutner')
+ * @param {string} appName - App name (e.g., 'remote-admin-cashbox-ui')
+ * @returns {string} Full app URL
+ */
+export const getAppUrl = (scope, appName) => {
+  return `${API_BASE_URL}/apps/${scope}/${appName}/`
+}
