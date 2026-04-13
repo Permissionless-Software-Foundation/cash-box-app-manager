@@ -39,9 +39,15 @@ class Server {
       app.use(express.urlencoded({ extended: true }))
       app.use(cors({ origin: '*' }))
 
-      // Request logging middleware
+      // HTTP access log — always to stdout (terminal / Docker logs), plus Winston when configured
       app.use((req, res, next) => {
-        wlogger.info(`[Request] ${req.method} ${req.path} (originalUrl: ${req.originalUrl})`)
+        const start = Date.now()
+        res.on('finish', () => {
+          const ms = Date.now() - start
+          const line = `${req.method} ${req.originalUrl} ${res.statusCode} ${ms}ms`
+          console.log(`[HTTP] ${line}`)
+          wlogger.info(`[HTTP] ${line}`)
+        })
         next()
       })
 
