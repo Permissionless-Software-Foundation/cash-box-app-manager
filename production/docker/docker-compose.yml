@@ -1,5 +1,6 @@
 services:
-  app-manager-api:
+  cashbox-api:
+    container_name: cashbox-manager
     build:
       context: ../..
       dockerfile: production/docker/Dockerfile
@@ -13,7 +14,8 @@ services:
       - ../data/leveldb:/app/data/config-db
     restart: unless-stopped
 
-  remote-admin-ui:
+  cashbox-ui:
+    container_name: cashbox-ui
     build:
       context: .
       dockerfile: Dockerfile.remote-admin
@@ -24,5 +26,5 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - app-manager-api
+      - cashbox-api
     restart: unless-stopped
