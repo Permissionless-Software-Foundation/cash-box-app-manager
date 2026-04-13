@@ -2,8 +2,6 @@
   REST API Controller library for the /api/config routes
 */
 
-import wlogger from '../../../adapters/wlogger.js'
-
 class ConfigRESTControllerLib {
   constructor (localConfig = {}) {
     // Dependency Injection.
@@ -23,7 +21,6 @@ class ConfigRESTControllerLib {
     // Bind 'this' object to all subfunctions
     this.getConfig = this.getConfig.bind(this)
     this.saveConfig = this.saveConfig.bind(this)
-    this.handleError = this.handleError.bind(this)
   }
 
   /**
@@ -51,7 +48,7 @@ class ConfigRESTControllerLib {
    * @apiError (500) {String} status Error status
    * @apiError (500) {String} message Error message
    */
-  async getConfig (req, res) {
+  async getConfig (req, res, next) {
     try {
       const { key } = req.params
 
@@ -73,7 +70,7 @@ class ConfigRESTControllerLib {
 
       return res.status(200).json(config)
     } catch (err) {
-      return this.handleError(err, req, res)
+      next(err)
     }
   }
 
@@ -103,7 +100,7 @@ class ConfigRESTControllerLib {
    * @apiError (500) {String} status Error status
    * @apiError (500) {String} message Error message
    */
-  async saveConfig (req, res) {
+  async saveConfig (req, res, next) {
     try {
       const { key } = req.params
       const { value } = req.body
@@ -125,16 +122,8 @@ class ConfigRESTControllerLib {
       const config = await this.useCases.saveConfig.execute(key, value)
       return res.status(200).json(config)
     } catch (err) {
-      return this.handleError(err, req, res)
+      next(err)
     }
-  }
-
-  handleError (err, req, res) {
-    wlogger.error('Error in ConfigRESTController:', err)
-    return res.status(500).json({
-      status: 'error',
-      message: err.message || 'Internal server error'
-    })
   }
 }
 

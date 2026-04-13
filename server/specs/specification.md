@@ -3,6 +3,8 @@
 **Version:** 1.0
 **Date:** 2026-01-12
 
+> **Note (2026-04):** The npm “app store”, bundled React client, and `/api/apps` surface were removed. The shipped product is an API-only backend with `/api/config`; the UI is [`remote-admin`](../../../remote-admin). The sections below that describe app discovery, install/uninstall, and `/apps/...` routing are **historical** only.
+
 ## 1. Overview
 
 This document outlines the technical specification and development plan for the **Pi Appliance Host Application**. This application will serve as the primary user interface and application manager for a Raspberry Pi-based touchscreen appliance. It will provide a home screen for launching installed applications and an "app store" for discovering and installing new ones.

@@ -1,24 +1,15 @@
 # Cash Box App Manager
 
-Pi Appliance Host Application - App manager for Raspberry Pi touchscreen appliance.
-
-This application serves as the primary user interface and application manager for a Raspberry Pi-based touchscreen appliance. It provides a home screen for launching installed applications and an "app store" for discovering and installing new ones.
+Node.js **REST API** for persisting cash box configuration (LevelDB). The UI lives in the separate [remote-admin](../remote-admin) project, which calls this service’s `/api/config` routes.
 
 ## Architecture
 
-The application follows **Clean Architecture** principles with the following structure:
+Clean Architecture layout:
 
-- **Entities**: Domain models (App)
-- **Use Cases**: Business logic (GetInstalledApps, DiscoverApps, InstallApp, UninstallApp)
-- **Adapters**: External interfaces (NpmService, FileSystem)
-- **Controllers**: REST API endpoints
-
-## Features
-
-- **Home Screen**: Displays icons for all installed applications
-- **App Store**: Browse and install apps from npm registry
-- **Dynamic App Routing**: Serves static files from installed apps
-- **REST API**: Full API for managing apps programmatically
+- **Entities**: `Config`
+- **Use cases**: `GetConfig`, `SaveConfig`
+- **Adapters**: LevelDB, Winston logger
+- **Controllers**: REST (`/api/config`)
 
 ## Prerequisites
 
@@ -27,182 +18,48 @@ The application follows **Clean Architecture** principles with the following str
 
 ## Installation
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   cd client
-   npm install
-   cd ..
-   ```
-
-## Development
-
-### Backend
-
-Start the backend server:
 ```bash
+cd server
+npm install
+```
+
+## Run
+
+```bash
+cd server
 npm start
 ```
 
-The server will run on port 3000 by default.
+Default port is **3633** in development (`NODE_ENV=development`). In production, set `PORT` or rely on the default in `server/src/config/env/production.js`.
 
-### Frontend
+## API documentation
 
-In a separate terminal, start the frontend development server:
+After generating docs:
+
 ```bash
-cd client
-npm run dev
+cd server
+npm run docs
 ```
 
-The frontend will run on port 3001 with hot-reload enabled.
-
-### Building Frontend
-
-To build the frontend for production:
-```bash
-cd client
-npm run build
-```
-
-The built files will be in `client/build/` and will be served by the Express server.
+Open `http://localhost:3633/api-docs` while the server is running.
 
 ## Testing
 
-Run unit tests:
 ```bash
+cd server
 npm test
 ```
 
-Run integration tests:
-```bash
-npm run test:integration
-```
+## Endpoints (summary)
 
-Run all tests:
-```bash
-npm run test:all
-```
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/` | Service metadata and links |
+| GET | `/health` | Liveness |
+| GET | `/api/config/:key` | Read config by key |
+| PUT | `/api/config/:key` | Upsert config by key |
 
-## API Endpoints
-
-All API endpoints are prefixed with `/api`.
-
-### `GET /api/apps/installed`
-
-Retrieves a list of all currently installed applications.
-
-**Response:**
-```json
-[
-  {
-    "name": "@scope/calculator-app",
-    "version": "1.0.1",
-    "description": "A simple calculator.",
-    "config": {
-      "displayName": "Calculator",
-      "icon": "/apps/calculator-app/icon.png"
-    }
-  }
-]
-```
-
-### `GET /api/apps/discover`
-
-Searches the npm registry for all available apps with the keyword `psf-pi-appliance-app`.
-
-**Response:**
-```json
-[
-  {
-    "name": "@scope/weather-app",
-    "version": "1.1.0",
-    "description": "A simple weather app."
-  }
-]
-```
-
-### `POST /api/apps/install/:scope/:appName`
-
-Installs a new application.
-
-**URL Parameters:**
-- `scope`: App scope (e.g., `my-apps`)
-- `appName`: App name (e.g., `calculator-app`)
-
-**Response:**
-```json
-{
-  "status": "success",
-  "message": "App installed successfully."
-}
-```
-
-### `POST /api/apps/uninstall/:scope/:appName`
-
-Uninstalls an existing application.
-
-**URL Parameters:**
-- `scope`: App scope (e.g., `my-apps`)
-- `appName`: App name (e.g., `calculator-app`)
-
-**Response:**
-```json
-{
-  "status": "success",
-  "message": "App uninstalled successfully."
-}
-```
-
-## App Package Standard
-
-Third-party developers must adhere to the following standard for their apps to be compatible:
-
-1. **package.json**:
-   - Must contain the keyword: `"keywords": ["psf-pi-appliance-app"]`
-   - The `name` field must use an npm scope (e.g., `@my-name/my-app`)
-
-2. **Build Output**:
-   - The app must be buildable into a single directory of static files (`index.html`, JS, CSS)
-   - This directory should be specified in the `files` array in `package.json`
-   - Common build directories: `dist`, `build`, or `public`
-
-3. **app.config.json** (Recommended):
-   - A file in the package root
-   - Contents:
-     ```json
-     {
-       "displayName": "My Awesome App",
-       "icon": "assets/icon.png"
-     }
-     ```
-   - The `icon` path should be relative to the build output directory
-
-## Project Structure
-
-```
-cash-box-app-manager/
-├── bin/
-│   └── server.js              # Server entry point
-├── client/                    # React frontend
-│   ├── src/
-│   │   ├── components/       # React components
-│   │   └── App.jsx           # Main app component
-│   └── package.json
-├── src/
-│   ├── adapters/             # External interfaces
-│   │   ├── npm-service.js   # npm registry and commands
-│   │   └── wlogger.js        # Winston logger
-│   ├── config/               # Configuration
-│   ├── controllers/          # REST API controllers
-│   ├── entities/             # Domain models
-│   │   └── app.js
-│   └── use-cases/            # Business logic
-├── test/
-│   ├── unit/                 # Unit tests
-│   └── integration/          # Integration tests
-└── package.json
-```
+See the config controller source and generated apidoc for request/response shapes.
 
 ## License
 

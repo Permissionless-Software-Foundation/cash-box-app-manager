@@ -1,12 +1,7 @@
 # Dependencies
 node_modules/
-client/node_modules/
 data/
 docs/
-
-# Build outputs
-client/build/
-client/dist/
 
 # Logs
 logs/
@@ -28,11 +23,7 @@ npm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Installed apps database
-installed-apps.json
-
 # Test coverage
 coverage/
 .nyc_output/
-
 

@@ -1,15 +1,13 @@
 {
   "name": "cash-box-app-manager",
   "version": "1.0.0",
-  "description": "Pi Appliance Host Application - App manager for Raspberry Pi touchscreen appliance",
+  "description": "REST API backend for cash box configuration (consumed by remote-admin)",
   "main": "bin/server.js",
   "type": "module",
   "scripts": {
     "start": "node bin/server.js",
     "dev": "node bin/server.js",
     "test": "c8 mocha test/unit/",
-    "test:integration": "mocha --timeout 25000 test/integration/",
-    "test:all": "mocha test/unit/ test/integration/",
     "lint": "standard --env mocha --fix",
     "coverage": "c8 --reporter=html mocha test/unit/ --exit",
     "docs": "apidoc -i src/controllers/rest-api -o docs/api"
@@ -17,13 +15,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@chris.troutner/remote-admin-cashbox-ui": "1.0.4",
     "apidoc": "1.2.0",
     "cors": "2.8.5",
     "dotenv": "16.3.1",
     "express": "4.18.2",
     "level": "10.0.0",
-    "npm-registry-fetch": "16.0.0",
     "winston": "3.11.0",
     "winston-daily-rotate-file": "4.7.1"
   },
