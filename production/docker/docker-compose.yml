@@ -1,6 +1,6 @@
 services:
   cashbox-api:
-    container_name: cashbox-manager
+    container_name: cashbox-api
     build:
       context: ../..
       dockerfile: production/docker/Dockerfile
