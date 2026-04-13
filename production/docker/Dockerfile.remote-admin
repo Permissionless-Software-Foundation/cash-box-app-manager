@@ -1,0 +1,25 @@
+# remote-admin UI: clone from GitHub, build with Vite, serve with nginx (no local app source)
+ARG REMOTE_ADMIN_REPO=https://github.com/Permissionless-Software-Foundation/remote-admin.git
+# Omit to use the repository default branch; set e.g. master or main if you need a fixed ref
+ARG REMOTE_ADMIN_REF=
+
+FROM node:20-bookworm-slim AS builder
+ARG REMOTE_ADMIN_REPO
+ARG REMOTE_ADMIN_REF
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates git \
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+RUN if [ -n "$REMOTE_ADMIN_REF" ]; then \
+      git clone --depth 1 --branch "$REMOTE_ADMIN_REF" "$REMOTE_ADMIN_REPO" .; \
+    else \
+      git clone --depth 1 "$REMOTE_ADMIN_REPO" .; \
+    fi
+
+# Upstream lockfile may lag package.json; install from manifest so the image tracks the repo default branch.
+RUN npm install && npm run build
+
+FROM nginx:1.27-alpine
+COPY nginx.remote-admin.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /src/dist /usr/share/nginx/html
+EXPOSE 80

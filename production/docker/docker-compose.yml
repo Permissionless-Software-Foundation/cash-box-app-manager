@@ -1,0 +1,28 @@
+services:
+  app-manager-api:
+    build:
+      context: ../..
+      dockerfile: production/docker/Dockerfile
+    ports:
+      - "3633:3633"
+    environment:
+      NODE_ENV: production
+      PORT: "3633"
+    volumes:
+      # Persist LevelDB outside the container (maps to app default data/config-db)
+      - ../data/leveldb:/app/data/config-db
+    restart: unless-stopped
+
+  remote-admin-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.remote-admin
+      args:
+        # Optional: pin a branch or tag (leave unset to use the repo default branch)
+        # REMOTE_ADMIN_REF: master
+        REMOTE_ADMIN_REPO: https://github.com/Permissionless-Software-Foundation/remote-admin.git
+    ports:
+      - "8080:80"
+    depends_on:
+      - app-manager-api
+    restart: unless-stopped
