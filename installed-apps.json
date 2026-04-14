@@ -1,10 +1,10 @@
 [
   {
-    "name": "@chris.troutner/remote-admin-cashbox-ui",
+    "name": "@chris.troutner/cash-box-fe",
     "version": "1.0.2",
-    "description": "Remote administration app for Cash Box App Manager",
+    "description": "Frontend app for Cash Box FE",
     "config": {
-      "displayName": "Remote Administration",
+      "displayName": "Cash Box FE",
       "icon": "assets/icon.png"
     }
   }

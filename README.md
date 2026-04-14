@@ -1,6 +1,6 @@
-# Cash Box App Manager
+# Cash Box FE
 
-Node.js **REST API** for persisting cash box configuration (LevelDB). The UI lives in the separate [remote-admin](../remote-admin) project, which calls this service’s `/api/config` routes.
+Node.js **REST API** for persisting cash box configuration (LevelDB). The UI lives in the separate [cash-box-fe](../cash-box-fe) project, which calls this service's `/api/config` routes.
 
 ## Architecture
 
@@ -36,8 +36,8 @@ Default port is **3633** in development (`NODE_ENV=development`). In production,
 
 Compose file: [`production/docker/docker-compose.yml`](production/docker/docker-compose.yml). It starts two containers:
 
-1. **app-manager-api** — this REST API (image built from [`production/docker/Dockerfile`](production/docker/Dockerfile))
-2. **remote-admin-ui** — nginx serving a production build of [remote-admin](https://github.com/Permissionless-Software-Foundation/remote-admin). The UI image is built from [`production/docker/Dockerfile.remote-admin`](production/docker/Dockerfile.remote-admin): it clones that GitHub repository during the image build (it does not use a local `remote-admin` checkout).
+1. **cashbox-api** — this REST API (image built from [`production/docker/Dockerfile`](production/docker/Dockerfile))
+2. **cashbox-ui** — nginx serving a production build of [cash-box-fe](https://github.com/Permissionless-Software-Foundation/cash-box-fe). The UI image is built from [`production/docker/Dockerfile.cash-box-fe`](production/docker/Dockerfile.cash-box-fe): it clones that GitHub repository during the image build (it does not use a local `cash-box-fe` checkout).
 
 ### Prerequisites
 
@@ -58,7 +58,7 @@ Omit `--build` on later runs if images are already built.
 
 | Service | URL |
 |--------|-----|
-| Remote Admin UI | http://localhost:8080 |
+| Cash Box FE UI | http://localhost:8080 |
 | REST API | http://localhost:3633 |
 
 The browser loads the UI from port 8080; the bundled app calls the API at `http://localhost:3633` (same host), matching the published API port.
@@ -69,16 +69,16 @@ LevelDB data lives on the host under **`production/data/leveldb`**, mounted into
 
 ### Build options (UI image)
 
-In `production/docker/docker-compose.yml`, under `remote-admin-ui` → `build` → `args`:
+In `production/docker/docker-compose.yml`, under `cashbox-ui` -> `build` -> `args`:
 
-- **`REMOTE_ADMIN_REPO`** — Git clone URL (default: the PSF GitHub repo above)
-- **`REMOTE_ADMIN_REF`** — optional branch or tag; if omitted, the clone uses the repository’s default branch
+- **`CASH_BOX_FE_REPO`** — Git clone URL (default: the PSF GitHub repo above)
+- **`CASH_BOX_FE_REF`** — optional branch or tag; if omitted, the clone uses the repository's default branch
 
 After changing these args, rebuild the UI image, for example:
 
 ```bash
 cd production/docker
-docker compose build --no-cache remote-admin-ui
+docker compose build --no-cache cashbox-ui
 docker compose up -d
 ```
 

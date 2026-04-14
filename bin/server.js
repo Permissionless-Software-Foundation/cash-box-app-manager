@@ -1,5 +1,5 @@
 /*
-  Express server for Cash Box App Manager.
+  Express server for Cash Box FE.
   The architecture of the code follows the Clean Architecture pattern.
 */
 
@@ -68,15 +68,15 @@ class Server {
       app.get('/health', (req, res) => {
         res.json({
           status: 'ok',
-          service: 'cash-box-app-manager',
+          service: 'cash-box-fe',
           version: config.version
         })
       })
 
-      // Root endpoint — UI is provided separately (e.g. remote-admin)
+      // Root endpoint — UI is provided separately (e.g. cash-box-fe)
       app.get('/', (req, res) => {
         res.json({
-          service: 'cash-box-app-manager',
+          service: 'cash-box-fe',
           version: config.version,
           docs: '/api-docs',
           configApi: '/api/config'

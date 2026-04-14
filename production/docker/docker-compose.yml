@@ -18,11 +18,11 @@ services:
     container_name: cashbox-ui
     build:
       context: .
-      dockerfile: Dockerfile.remote-admin
+      dockerfile: Dockerfile.cash-box-fe
       args:
         # Optional: pin a branch or tag (leave unset to use the repo default branch)
-        # REMOTE_ADMIN_REF: master
-        REMOTE_ADMIN_REPO: https://github.com/Permissionless-Software-Foundation/remote-admin.git
+        # CASH_BOX_FE_REF: master
+        CASH_BOX_FE_REPO: https://github.com/Permissionless-Software-Foundation/cash-box-fe.git
     ports:
       - "8080:80"
     depends_on:

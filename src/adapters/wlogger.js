@@ -15,7 +15,7 @@ const logger = winston.createLogger({
     winston.format.errors({ stack: true }),
     winston.format.json()
   ),
-  defaultMeta: { service: 'cash-box-app-manager' },
+  defaultMeta: { service: 'cash-box-fe' },
   transports: [
     new DailyRotateFile({
       filename: `${logDir}/error-%DATE%.log`,

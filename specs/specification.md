@@ -3,7 +3,7 @@
 **Version:** 1.0
 **Date:** 2026-01-12
 
-> **Note (2026-04):** The npm “app store”, bundled React client, and `/api/apps` surface were removed. The shipped product is an API-only backend with `/api/config`; the UI is [`remote-admin`](../../../remote-admin). The sections below that describe app discovery, install/uninstall, and `/apps/...` routing are **historical** only.
+> **Note (2026-04):** The npm "app store", bundled React client, and `/api/apps` surface were removed. The shipped product is an API-only backend with `/api/config`; the UI is [`cash-box-fe`](../../../cash-box-fe). The sections below that describe app discovery, install/uninstall, and `/apps/...` routing are **historical** only.
 
 ## 1. Overview
 

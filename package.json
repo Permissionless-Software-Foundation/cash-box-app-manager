@@ -1,7 +1,7 @@
 {
-  "name": "cash-box-app-manager",
+  "name": "cash-box-fe",
   "version": "1.0.0",
-  "description": "REST API backend for cash box configuration (consumed by remote-admin)",
+  "description": "REST API backend for cash box configuration (consumed by cash-box-fe)",
   "main": "bin/server.js",
   "type": "module",
   "scripts": {
